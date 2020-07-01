@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-md-6">
+    <div class="row">
+       <div class="col">
+          <div class="card card-body">  
+    
+             <form method="get">
+                {{ filter.form.as_p }}
+              <button type="submit" class="btn btn-primary btn-lg btn-block">Sort</button>
+            </form>
+             <a href="{% url 'product_create' %}"><button type="button" class="btn btn-primary btn-lg btn-block">CREATE A NEW PRODUCT</button></a>
+          </div>
+       </div>
+       
+    </div>
+    <br>
+    <!-- product-shorting -->
+<div class="container">
+	<div class="row">
+		<div class="col-xs-8">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<div class="panel-title">
+						<div class="row">
+							<div class="col-xs-6">
+                                <h3>Product List</h3>
+                                <h4>Total products : {{ count }}</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel-body">
+                    {% for obj in filter.qs %}
+                        <div class="row">
+                            <div class="col-xs-2"><img class="img-responsive" src="{{ obj.image.url }}">
+                            </div>
+                            <div class="col-xs-4">
+                                <h4 class="product-name"><strong>{{ obj.name }}</strong></h4><h4><small>{{ obj.description }}</small></h4>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="col-xs-6 text-right">
+                                    <h6><strong> $ {{ obj.price }} </strong></h6>
+                                </div>
+                                <a href="{% url 'product_edit' obj.slug %}"><button type="button" class="btn btn-warning">Edit</button></a>
+                                <a href="{% url 'product_delete' obj.slug %}">  <button type="button" class="btn btn-danger">Delete</button></a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    {% endfor %}
+				</div>
+				<div class="panel-footer">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
